@@ -350,9 +350,31 @@ export default function ParentDashboard() {
 }
 
 // ─── OVERVIEW PAGE ────────────────────────────────────────
-function OverviewPage({ profile, student, batch, marks, tests, attendance, notifications, avgScore, presentCount, absentCount, lateCount, attendancePct }: any) {
-  const recentTests = [...tests].sort((a: Test, b: Test) => new Date(b.test_date || b.created_at).getTime() - new Date(a.test_date || a.created_at).getTime()).slice(0, 4)
+// ─── OVERVIEW PAGE ────────────────────────────────────────
+function OverviewPage({
+  profile,
+  student,
+  batch,
+  marks,
+  tests,
+  attendance,
+  notifications,
+  avgScore,
+  presentCount,
+  absentCount,
+  lateCount,
+  attendancePct,
+}: any) {
+
+  const recentTests = [...tests]
+    .sort((a, b) =>
+      new Date((b.test_date || b.created_at || "")).getTime() -
+      new Date((a.test_date || a.created_at || "")).getTime()
+    )
+    .slice(0, 4)
+
   const recentNotices = notifications.slice(0, 4)
+
 
   // Subject scores for progress bars
   const subjectMap: Record<string, { total: number; count: number; maxTotal: number }> = {}
