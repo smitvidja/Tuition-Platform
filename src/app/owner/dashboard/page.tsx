@@ -35,6 +35,7 @@ const S = {
 }
 
 const SUBJECTS = ['Mathematics','Physics','Chemistry','Biology','English','Hindi','Social Science','Computer Science','Accounts','Economics','Other']
+const BATCH_SUBJECT_OPTIONS = ['All subjects', 'Other']
 const TEST_TYPES = ['unit','weekly','quarterly','midterm','final']
 const PAYMENT_MODES = ['cash','upi','bank transfer','cheque','card']
 const NOTIF_TYPES = ['general','exam','attendance','marks','holiday','warning']
@@ -164,7 +165,7 @@ export default function OwnerDashboard() {
         @keyframes spin{to{transform:rotate(360deg)}}
         .fade-up{animation:fadeUp 0.4s ease forwards;}
         @media(max-width:900px){.desktop-nav{display:none !important;}.ham-btn{display:flex !important;}}
-        @media(max-width:768px){.stats-grid{grid-template-columns:1fr 1fr !important;}.two-col{grid-template-columns:1fr !important;}.modal-inner{position:fixed;bottom:0;left:0;right:0;max-width:100% !important;border-radius:12px 12px 0 0;max-height:85vh;}}
+        @media(max-width:768px){.stats-grid{grid-template-columns:1fr 1fr !important;}.two-col{grid-template-columns:1fr !important;}.modal-inner{position:fixed;bottom:0;left:0;right:0;max-width:100% !important;border-radius:12px 12px 0 0;max-height:85vh;}.add-student-modal{position:relative !important;bottom:auto !important;left:auto !important;right:auto !important;max-width:900px !important;max-height:calc(100vh - 72px) !important;border-radius:4px !important;}}
         @media(max-width:480px){.stats-grid{grid-template-columns:1fr !important;}}
       `}</style>
 
@@ -348,9 +349,22 @@ function StudentsPage({ students, batches, reload }: any) {
   const [batchFilter, setBatchFilter] = useState('all')
   const [showAdd, setShowAdd] = useState(false)
   const [deleting, setDeleting] = useState<Student | null>(null)
+  const [editing, setEditing] = useState<Student | null>(null)
   const [form, setForm] = useState({ name: '', email: '', password: '', phone: '', roll_no: '', batch_id: '', date_of_birth: '', address: '', parent_name: '', parent_email: '', parent_phone: '', parent_password: '' })
+  const [editForm, setEditForm] = useState({ name: '', phone: '', roll_no: '', batch_id: '', date_of_birth: '', address: '', is_active: true })
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const addStudentModalRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (!showAdd) return
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    if (addStudentModalRef.current) addStudentModalRef.current.scrollTop = 0
+
+    return () => { document.body.style.overflow = previousOverflow }
+  }, [showAdd])
 
   const filtered = students.filter((s: Student) => {
     const name = (s.profiles as any)?.name?.toLowerCase() || ''
@@ -389,8 +403,43 @@ function StudentsPage({ students, batches, reload }: any) {
     await reload()
   }
 
+  function openEdit(student: Student) {
+    setEditing(student)
+    setEditForm({
+      name: (student.profiles as any)?.name || '',
+      phone: (student.profiles as any)?.phone || '',
+      roll_no: student.roll_no || '',
+      batch_id: student.batch_id || '',
+      date_of_birth: student.date_of_birth || '',
+      address: student.address || '',
+      is_active: student.is_active ?? true,
+    })
+  }
+
+  async function handleUpdateStudent() {
+    if (!editing || !editForm.name.trim()) return
+    setSaving(true)
+    await supabase
+      .from('profiles')
+      .update({ name: editForm.name.trim(), phone: editForm.phone.trim() || null })
+      .eq('id', editing.user_id)
+    await supabase
+      .from('students')
+      .update({
+        roll_no: editForm.roll_no.trim() || null,
+        batch_id: editForm.batch_id || null,
+        date_of_birth: editForm.date_of_birth || null,
+        address: editForm.address.trim() || null,
+        is_active: editForm.is_active,
+      })
+      .eq('id', editing.id)
+    setSaving(false)
+    setEditing(null)
+    await reload()
+  }
+
   return (
-    <div className="fade-up">
+    <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={S.sectionTitle}>Students</div>
@@ -447,7 +496,10 @@ function StudentsPage({ students, batches, reload }: any) {
                   </span>
                 </td>
                 <td style={{ padding: '12px' }}>
-                  <button style={S.btnDanger} onClick={() => setDeleting(s)}>Delete</button>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button style={S.btnGhost} onClick={() => openEdit(s)}>Edit</button>
+                    <button style={S.btnDanger} onClick={() => setDeleting(s)}>Delete</button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -457,8 +509,22 @@ function StudentsPage({ students, batches, reload }: any) {
 
       {/* Add Student Modal */}
       {showAdd && (
-        <div style={S.modalBg} onClick={e => { if (e.target === e.currentTarget) setShowAdd(false) }}>
-          <div style={S.modal} className="modal-inner">
+        <div
+          style={{ ...S.modalBg, alignItems: 'flex-start', justifyContent: 'center', overflow: 'hidden', padding: '72px 16px 16px' }}
+          onClick={e => { if (e.target === e.currentTarget) setShowAdd(false) }}
+        >
+          <div
+            style={{
+              ...S.modal,
+              margin: 0,
+              width: '100%',
+              maxWidth: 900,
+              maxHeight: 'calc(100vh - 88px)',
+              overflowY: 'auto',
+            }}
+            ref={addStudentModalRef}
+            className="modal-inner add-student-modal"
+          >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
               <div style={{ fontFamily: "'Fraunces',serif", fontSize: 20, fontWeight: 700, color: '#1A2332' }}>Add New Student</div>
               <button onClick={() => setShowAdd(false)} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: '#718096' }}>✕</button>
@@ -528,6 +594,70 @@ function StudentsPage({ students, batches, reload }: any) {
           </div>
         </div>
       )}
+
+      {/* Edit Student Modal */}
+      {editing && (
+        <div style={S.modalBg} onClick={e => { if (e.target === e.currentTarget) setEditing(null) }}>
+          <div style={{ ...S.modal, maxWidth: 700 }} className="modal-inner">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+              <div style={{ fontFamily: "'Fraunces',serif", fontSize: 20, fontWeight: 700, color: '#1A2332' }}>Edit Student</div>
+              <button onClick={() => setEditing(null)} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: '#718096' }}>✕</button>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+              <div>
+                <label style={S.label}>Full Name *</label>
+                <input style={S.inp} value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
+              </div>
+              <div>
+                <label style={S.label}>Phone</label>
+                <input style={S.inp} value={editForm.phone} onChange={e => setEditForm({ ...editForm, phone: e.target.value })} />
+              </div>
+              <div>
+                <label style={S.label}>Roll No</label>
+                <input style={S.inp} value={editForm.roll_no} onChange={e => setEditForm({ ...editForm, roll_no: e.target.value })} />
+              </div>
+              <div>
+                <label style={S.label}>Date of Birth</label>
+                <input style={S.inp} type="date" value={editForm.date_of_birth} onChange={e => setEditForm({ ...editForm, date_of_birth: e.target.value })} />
+              </div>
+            </div>
+            <div style={{ marginBottom: 12 }}>
+              <label style={S.label}>Batch</label>
+              <select style={S.inp} value={editForm.batch_id} onChange={e => setEditForm({ ...editForm, batch_id: e.target.value })}>
+                <option value="">Select batch</option>
+                {batches.map((b: Batch) => <option key={b.id} value={b.id}>{b.name}</option>)}
+              </select>
+            </div>
+            <div style={{ marginBottom: 12 }}>
+              <label style={S.label}>Address</label>
+              <textarea style={{ ...S.inp, height: 72, resize: 'vertical' }} value={editForm.address} onChange={e => setEditForm({ ...editForm, address: e.target.value })} />
+            </div>
+            <div style={{ marginBottom: 20 }}>
+              <label style={{ ...S.label, marginBottom: 8 }}>Status</label>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button
+                  type="button"
+                  style={editForm.is_active ? S.btnGreen : S.btnGhost}
+                  onClick={() => setEditForm({ ...editForm, is_active: true })}
+                >
+                  Active
+                </button>
+                <button
+                  type="button"
+                  style={!editForm.is_active ? S.btnDanger : S.btnGhost}
+                  onClick={() => setEditForm({ ...editForm, is_active: false })}
+                >
+                  Inactive
+                </button>
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+              <button style={S.btnGhost} onClick={() => setEditing(null)}>Cancel</button>
+              <button style={S.btn} onClick={handleUpdateStudent} disabled={saving}>{saving ? 'Updating...' : 'Update Student'}</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -537,13 +667,54 @@ function BatchesPage({ batches, reload }: any) {
   const [showAdd, setShowAdd] = useState(false)
   const [editing, setEditing] = useState<Batch | null>(null)
   const [deleting, setDeleting] = useState<Batch | null>(null)
-  const [customSubject, setCustomSubject] = useState(false)
   const [customSchedule, setCustomSchedule] = useState(false)
+  const [subjectOption, setSubjectOption] = useState('')
+  const [otherSubjectInput, setOtherSubjectInput] = useState('')
+  const [otherSubjects, setOtherSubjects] = useState<string[]>([])
   const [form, setForm] = useState({ name: '', subject: '', schedule: '' })
   const [saving, setSaving] = useState(false)
 
-  function openAdd() { setForm({ name: '', subject: '', schedule: '' }); setEditing(null); setShowAdd(true) }
-  function openEdit(b: Batch) { setForm({ name: b.name, subject: b.subject, schedule: b.schedule }); setEditing(b); setShowAdd(true) }
+  function openAdd() {
+    setForm({ name: '', subject: '', schedule: '' })
+    setSubjectOption('')
+    setOtherSubjectInput('')
+    setOtherSubjects([])
+    setEditing(null)
+    setShowAdd(true)
+  }
+
+  function openEdit(b: Batch) {
+    setForm({ name: b.name, subject: b.subject, schedule: b.schedule })
+    if (b.subject === 'All subjects') {
+      setSubjectOption('All subjects')
+      setOtherSubjects([])
+    } else {
+      setSubjectOption('Other')
+      setOtherSubjects(b.subject.split(',').map(s => s.trim()).filter(Boolean))
+    }
+    setOtherSubjectInput('')
+    setEditing(b)
+    setShowAdd(true)
+  }
+
+  function addOtherSubject() {
+    const next = otherSubjectInput.trim()
+    if (!next) return
+    if (otherSubjects.some(s => s.toLowerCase() === next.toLowerCase())) {
+      setOtherSubjectInput('')
+      return
+    }
+    const updated = [...otherSubjects, next]
+    setOtherSubjects(updated)
+    setOtherSubjectInput('')
+    setForm({ ...form, subject: updated.join(', ') })
+  }
+
+  function removeOtherSubject(subjectToRemove: string) {
+    const updated = otherSubjects.filter(s => s !== subjectToRemove)
+    setOtherSubjects(updated)
+    setForm({ ...form, subject: updated.join(', ') })
+  }
 
   async function handleSave() {
     if (!form.name || !form.subject || !form.schedule) return
@@ -562,7 +733,7 @@ function BatchesPage({ batches, reload }: any) {
   }
 
   return (
-    <div className="fade-up">
+    <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
         <div>
           <div style={S.sectionTitle}>Batches</div>
@@ -583,7 +754,9 @@ function BatchesPage({ batches, reload }: any) {
               </div>
             </div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              <span style={S.badge('#1A3A5C', '#E8F0F9')}>{b.subject}</span>
+              {b.subject.split(',').map(sub => sub.trim()).filter(Boolean).map(sub => (
+                <span key={sub} style={S.badge('#1A3A5C', '#E8F0F9')}>{sub}</span>
+              ))}
               <span style={S.badge('#4A3500', '#FBF3E2')}>{b.schedule}</span>
             </div>
           </div>
@@ -602,17 +775,60 @@ function BatchesPage({ batches, reload }: any) {
               <input style={S.inp} placeholder="e.g. Class 10 Science A" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
             </div>
             <div style={{ marginBottom: 16 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                <label style={S.label}>Subject *</label>
-                <button onClick={() => setCustomSubject(!customSubject)} style={{ background: 'none', border: 'none', fontSize: 12, color: '#1A3A5C', cursor: 'pointer' }}>{customSubject ? 'Use preset' : 'Custom'}</button>
-              </div>
-              {customSubject ? (
-                <input style={S.inp} placeholder="Enter subject" value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} />
-              ) : (
-                <select style={S.inp} value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })}>
-                  <option value="">Select subject</option>
-                  {SUBJECTS.map(s => <option key={s} value={s}>{s}</option>)}
-                </select>
+              <label style={S.label}>Subject *</label>
+              <select
+                style={S.inp}
+                value={subjectOption}
+                onChange={e => {
+                  const value = e.target.value
+                  setSubjectOption(value)
+                  if (value === 'All subjects') {
+                    setOtherSubjects([])
+                    setOtherSubjectInput('')
+                    setForm(prev => ({ ...prev, subject: 'All subjects' }))
+                  }
+                  if (value === 'Other') {
+                    setForm(prev => ({
+                      ...prev,
+                      subject: otherSubjects.length > 0
+                        ? otherSubjects.join(', ')
+                        : (prev.subject === 'All subjects' ? '' : prev.subject),
+                    }))
+                  }
+                }}
+              >
+                <option value="">Select subject</option>
+                {BATCH_SUBJECT_OPTIONS.map(s => <option key={s} value={s}>{s}</option>)}
+              </select>
+              {subjectOption === 'Other' && (
+                <>
+                  <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+                    <input
+                      style={S.inp}
+                      placeholder="Enter subject name"
+                      value={otherSubjectInput}
+                      onChange={e => setOtherSubjectInput(e.target.value)}
+                      onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addOtherSubject() } }}
+                    />
+                    <button type="button" style={S.btnGhost} onClick={addOtherSubject}>Add</button>
+                  </div>
+                  {otherSubjects.length > 0 && (
+                    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 10 }}>
+                      {otherSubjects.map(s => (
+                        <span key={s} style={{ ...S.badge('#1A3A5C', '#E8F0F9'), display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                          {s}
+                          <button
+                            type="button"
+                            onClick={() => removeOtherSubject(s)}
+                            style={{ background: 'none', border: 'none', color: '#1A3A5C', cursor: 'pointer', padding: 0, fontSize: 13, lineHeight: 1 }}
+                          >
+                            ✕
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </>
               )}
             </div>
             <div style={{ marginBottom: 24 }}>
@@ -701,7 +917,7 @@ function AttendancePage({ students, batches, profile }: any) {
   const late = batchStudents.filter((s: Student) => attendance[s.id] === 'late').length
 
   return (
-    <div className="fade-up">
+    <div>
       <div style={{ marginBottom: 24 }}>
         <div style={S.sectionTitle}>Attendance</div>
         <div style={{ fontSize: 14, color: '#718096' }}>Mark daily attendance for each batch</div>
@@ -826,7 +1042,7 @@ function MarksPage({ students, batches, tests, marks, profile, reload }: any) {
   }
 
   return (
-    <div className="fade-up">
+    <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={S.sectionTitle}>Marks</div>
@@ -972,7 +1188,7 @@ function AnalyticsPage({ students, batches, tests, marks }: any) {
   }).filter(Boolean)
 
   return (
-    <div className="fade-up">
+    <div>
       <div style={{ marginBottom: 24 }}>
         <div style={S.sectionTitle}>Analytics</div>
         <div style={{ fontSize: 14, color: '#718096' }}>Performance insights across batches</div>
@@ -1054,7 +1270,7 @@ function MaterialsPage({ materials, batches, profile, reload }: any) {
   }
 
   return (
-    <div className="fade-up">
+    <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
         <div>
           <div style={S.sectionTitle}>Study Materials</div>
@@ -1160,7 +1376,7 @@ function NotificationsPage({ notifications, parents, profile, reload }: any) {
   }
 
   return (
-    <div className="fade-up">
+    <div>
       <div style={{ marginBottom: 24 }}>
         <div style={S.sectionTitle}>Notifications</div>
         <div style={{ fontSize: 14, color: '#718096' }}>Send notices to parents</div>
@@ -1274,7 +1490,7 @@ function FeesPage({ fees, students, batches, profile, reload }: any) {
   }
 
   return (
-    <div className="fade-up">
+    <div>
       <div style={{ marginBottom: 24 }}>
         <div style={S.sectionTitle}>Fees</div>
         <div style={{ fontSize: 14, color: '#718096' }}>Track and manage student fee payments</div>
@@ -1405,6 +1621,22 @@ function AssistantsPage({ assistants, reload }: any) {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [deleting, setDeleting] = useState<Assistant | null>(null)
+  const [editing, setEditing] = useState<Assistant | null>(null)
+  const [editForm, setEditForm] = useState({ name: '', phone: '' })
+  const todayKeyRef = useRef(new Date().toISOString().split('T')[0])
+  const todayKey = todayKeyRef.current
+  const [selectedStatusDate, setSelectedStatusDate] = useState(todayKey)
+  const [facultyStatusByDate, setFacultyStatusByDate] = useState<Record<string, Record<string, 'present' | 'leave' | 'absent'>>>({})
+  const [showHistory, setShowHistory] = useState(false)
+
+  useEffect(() => {
+    const stored = localStorage.getItem('faculty-status-history')
+    if (stored) {
+      try { setFacultyStatusByDate(JSON.parse(stored)) } catch { setFacultyStatusByDate({}) }
+    } else {
+      setFacultyStatusByDate({})
+    }
+  }, [])
 
   async function handleAdd() {
     if (!form.name || !form.email || !form.password) { setError('All fields required'); return }
@@ -1423,6 +1655,44 @@ function AssistantsPage({ assistants, reload }: any) {
     setDeleting(null); await reload()
   }
 
+  function openEdit(a: Assistant) {
+    setEditing(a)
+    setEditForm({ name: a.name || '', phone: a.phone || '' })
+  }
+
+  async function handleUpdateAssistant() {
+    if (!editing || !editForm.name.trim()) return
+    setSaving(true)
+    await supabase
+      .from('profiles')
+      .update({ name: editForm.name.trim(), phone: editForm.phone.trim() || null })
+      .eq('id', editing.id)
+    setSaving(false)
+    setEditing(null)
+    await reload()
+  }
+
+  function markFacultyStatus(id: string, status: 'present' | 'leave' | 'absent' | null) {
+    const dayMap = { ...(facultyStatusByDate[selectedStatusDate] || {}) }
+    if (status) dayMap[id] = status
+    else delete dayMap[id]
+    const updated = { ...facultyStatusByDate, [selectedStatusDate]: dayMap }
+    setFacultyStatusByDate(updated)
+    localStorage.setItem('faculty-status-history', JSON.stringify(updated))
+  }
+
+  const currentStatus = facultyStatusByDate[selectedStatusDate] || {}
+  const presentCount = assistants.filter((a: Assistant) => currentStatus[a.id] === 'present').length
+  const leaveCount = assistants.filter((a: Assistant) => currentStatus[a.id] === 'leave').length
+  const absentCount = assistants.filter((a: Assistant) => currentStatus[a.id] === 'absent').length
+  const unmarkedCount = Math.max(0, assistants.length - presentCount - leaveCount - absentCount)
+  const nameById = Object.fromEntries(assistants.map((a: Assistant) => [a.id, a.name || a.email]))
+  const historyRows = Object.entries(facultyStatusByDate)
+    .flatMap(([date, day]) =>
+      Object.entries(day).map(([assistantId, status]) => ({ date, assistantId, status }))
+    )
+    .sort((a, b) => b.date.localeCompare(a.date))
+
   const accessItems = [
     { label: 'Attendance', allowed: true },
     { label: 'Marks', allowed: true },
@@ -1433,7 +1703,7 @@ function AssistantsPage({ assistants, reload }: any) {
   ]
 
   return (
-    <div className="fade-up">
+    <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
         <div>
           <div style={S.sectionTitle}>Faculty</div>
@@ -1444,6 +1714,67 @@ function AssistantsPage({ assistants, reload }: any) {
 
       <div style={{ background: '#E8F0F9', border: '1px solid rgba(26,58,92,0.15)', borderRadius: 4, padding: '14px 18px', marginBottom: 24, fontSize: 13, color: '#1A3A5C' }}>
         Faculty members can access Attendance and Marks only. Fees, Materials, Notifications and Analytics are restricted to the Owner.
+      </div>
+
+      <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end', marginBottom: 12, flexWrap: 'wrap' }}>
+        <div>
+          <label style={S.label}>Status Date</label>
+          <input
+            type="date"
+            style={{ ...S.inp, maxWidth: 200 }}
+            value={selectedStatusDate}
+            max={todayKey}
+            onChange={e => setSelectedStatusDate(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(120px, 1fr))', gap: 12, marginBottom: 20, maxWidth: 700 }}>
+        <div style={{ background: '#E6F4ED', borderRadius: 4, padding: 12 }}>
+          <div style={{ fontSize: 12, color: '#1C5D3B' }}>Present</div>
+          <div style={{ fontFamily: "'Fraunces',serif", fontSize: 22, color: '#1C5D3B', fontWeight: 700 }}>{presentCount}</div>
+        </div>
+        <div style={{ background: '#FBF3E2', borderRadius: 4, padding: 12 }}>
+          <div style={{ fontSize: 12, color: '#4A3500' }}>On Leave</div>
+          <div style={{ fontFamily: "'Fraunces',serif", fontSize: 22, color: '#4A3500', fontWeight: 700 }}>{leaveCount}</div>
+        </div>
+        <div style={{ background: '#FEF2F2', borderRadius: 4, padding: 12 }}>
+          <div style={{ fontSize: 12, color: '#8B1A1A' }}>Absent</div>
+          <div style={{ fontFamily: "'Fraunces',serif", fontSize: 22, color: '#8B1A1A', fontWeight: 700 }}>{absentCount}</div>
+        </div>
+        <div style={{ background: '#F7F7F7', borderRadius: 4, padding: 12 }}>
+          <div style={{ fontSize: 12, color: '#4A5568' }}>Not Marked</div>
+          <div style={{ fontFamily: "'Fraunces',serif", fontSize: 22, color: '#4A5568', fontWeight: 700 }}>{unmarkedCount}</div>
+        </div>
+      </div>
+
+      <div style={{ ...S.card, marginBottom: 20 }}>
+        <button
+          onClick={() => setShowHistory(!showHistory)}
+          style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+        >
+          <div style={{ fontSize: 15, fontWeight: 600, color: '#1A2332' }}>Faculty Status History</div>
+          <span style={{ fontSize: 13, color: '#1A3A5C' }}>{showHistory ? 'Hide ▲' : 'Show ▼'}</span>
+        </button>
+        {showHistory && (
+          <div style={{ marginTop: 12 }}>
+            {historyRows.length === 0 ? (
+              <div style={{ fontSize: 13, color: '#718096' }}>No status records yet.</div>
+            ) : (
+              <div style={{ maxHeight: 220, overflowY: 'auto' }}>
+                {historyRows.map((row, i) => (
+                  <div key={`${row.date}-${row.assistantId}-${i}`} style={{ display: 'flex', justifyContent: 'space-between', gap: 12, padding: '8px 0', borderBottom: i < historyRows.length - 1 ? '1px solid rgba(26,58,92,0.06)' : 'none' }}>
+                    <div style={{ fontSize: 13, color: '#1A2332' }}>{nameById[row.assistantId] || 'Unknown faculty'}</div>
+                    <div style={{ fontSize: 12, color: '#718096' }}>{row.date}</div>
+                    <span style={row.status === 'present' ? S.badge('#1C5D3B', '#E6F4ED') : row.status === 'leave' ? S.badge('#4A3500', '#FBF3E2') : S.badge('#8B1A1A', '#FEF2F2')}>
+                      {row.status === 'leave' ? 'On Leave' : row.status[0].toUpperCase() + row.status.slice(1)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {assistants.length === 0 ? (
@@ -1461,7 +1792,36 @@ function AssistantsPage({ assistants, reload }: any) {
                   <div style={{ fontFamily: "'Fraunces',serif", fontSize: 18, fontWeight: 700, color: '#1A2332' }}>{a.name}</div>
                   <div style={{ fontSize: 13, color: '#718096', marginTop: 2 }}>{a.email}</div>
                 </div>
-                <button style={S.btnDanger} onClick={() => setDeleting(a)}>Delete</button>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button style={S.btnGhost} onClick={() => openEdit(a)}>Edit</button>
+                  <button style={S.btnDanger} onClick={() => setDeleting(a)}>Delete</button>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+                <button
+                  style={currentStatus[a.id] === 'present' ? S.btnGreen : S.btnGhost}
+                  onClick={() => markFacultyStatus(a.id, 'present')}
+                >
+                  Present
+                </button>
+                <button
+                  style={currentStatus[a.id] === 'leave' ? { ...S.btn, background: '#4A3500' } : S.btnGhost}
+                  onClick={() => markFacultyStatus(a.id, 'leave')}
+                >
+                  On Leave
+                </button>
+                <button
+                  style={currentStatus[a.id] === 'absent' ? S.btnDanger : S.btnGhost}
+                  onClick={() => markFacultyStatus(a.id, 'absent')}
+                >
+                  Absent
+                </button>
+                <button
+                  style={!currentStatus[a.id] ? S.btnGhost : { ...S.btnGhost, opacity: 0.75 }}
+                  onClick={() => markFacultyStatus(a.id, null)}
+                >
+                  Clear
+                </button>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {accessItems.map((item, i) => (
@@ -1496,6 +1856,33 @@ function AssistantsPage({ assistants, reload }: any) {
             <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
               <button style={S.btnGhost} onClick={() => setShowAdd(false)}>Cancel</button>
               <button style={S.btn} onClick={handleAdd} disabled={saving}>{saving ? 'Adding...' : 'Add Faculty'}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {editing && (
+        <div style={S.modalBg} onClick={e => { if (e.target === e.currentTarget) setEditing(null) }}>
+          <div style={{ ...S.modal, maxWidth: 460 }} className="modal-inner">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+              <div style={{ fontFamily: "'Fraunces',serif", fontSize: 20, fontWeight: 700 }}>Edit Faculty</div>
+              <button onClick={() => setEditing(null)} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer' }}>✕</button>
+            </div>
+            <div style={{ marginBottom: 12 }}>
+              <label style={S.label}>Name *</label>
+              <input style={S.inp} value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
+            </div>
+            <div style={{ marginBottom: 12 }}>
+              <label style={S.label}>Phone</label>
+              <input style={S.inp} value={editForm.phone} onChange={e => setEditForm({ ...editForm, phone: e.target.value })} />
+            </div>
+            <div style={{ marginBottom: 20 }}>
+              <label style={S.label}>Email</label>
+              <input style={{ ...S.inp, background: '#F7F7F7' }} value={editing.email} readOnly />
+            </div>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+              <button style={S.btnGhost} onClick={() => setEditing(null)}>Cancel</button>
+              <button style={S.btn} onClick={handleUpdateAssistant} disabled={saving}>{saving ? 'Updating...' : 'Update'}</button>
             </div>
           </div>
         </div>
