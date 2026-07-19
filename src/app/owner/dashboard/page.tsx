@@ -20,7 +20,7 @@ const S = {
   nav: { position: 'sticky' as const, top: 0, zIndex: 100, background: 'rgba(250,250,248,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(26,58,92,0.08)', padding: '0 24px' },
   navInner: { maxWidth: 1400, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 },
   logo: { fontFamily: "'Fraunces', serif", fontSize: 22, fontWeight: 700, color: '#1A3A5C' },
-  card: { background: '#fff', border: '1px solid rgba(26,58,92,0.08)', borderRadius: 4, padding: 24 },
+  card: { background: '#fff', border: '1px solid rgba(26,58,92,0.08)', borderRadius: 4, padding: 24, overflowX: 'auto' as const },
   statCard: { background: '#fff', border: '1px solid rgba(26,58,92,0.08)', borderRadius: 4, padding: 24 },
   btn: { background: '#1A3A5C', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: 3, fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 500, cursor: 'pointer' },
   btnGreen: { background: '#1C5D3B', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: 3, fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 500, cursor: 'pointer' },
@@ -167,6 +167,8 @@ export default function OwnerDashboard() {
         @media(max-width:900px){.desktop-nav{display:none !important;}.ham-btn{display:flex !important;}}
         @media(max-width:768px){.stats-grid{grid-template-columns:1fr 1fr !important;}.two-col{grid-template-columns:1fr !important;}.modal-inner{position:fixed;bottom:0;left:0;right:0;max-width:100% !important;border-radius:12px 12px 0 0;max-height:85vh;}.add-student-modal{position:relative !important;bottom:auto !important;left:auto !important;right:auto !important;max-width:900px !important;max-height:calc(100vh - 72px) !important;border-radius:4px !important;}}
         @media(max-width:480px){.stats-grid{grid-template-columns:1fr !important;}}
+        .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+        @media(max-width:600px){.form-grid{grid-template-columns:1fr !important;}}
       `}</style>
 
       {/* NAVBAR */}
@@ -279,7 +281,7 @@ function DashboardHome({ profile, students, batches, tests, assistants, fees, ma
       {/* Quick Actions */}
       <div style={{ ...S.card, marginBottom: 28 }}>
         <div style={{ fontSize: 15, fontWeight: 600, color: '#1A2332', marginBottom: 16 }}>Quick Actions</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6,1fr)', gap: 12 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 12 }}>
           {[
             { icon: '👤', label: 'Add Student', page: 'students' },
             { icon: '📚', label: 'New Batch', page: 'batches' },
@@ -374,7 +376,7 @@ function StudentsPage({ students, batches, reload }: any) {
   })
 
   async function handleAdd() {
-    if (!form.name || !form.email || !form.password || !form.parent_email || !form.parent_password) {
+    if (!form.name || !form.parent_email || !form.parent_password) {
       setError('Please fill all required fields'); return
     }
     setSaving(true); setError('')
@@ -489,7 +491,11 @@ function StudentsPage({ students, batches, reload }: any) {
                 <td style={{ padding: '12px' }}>
                   <span style={S.badge('#1A3A5C', '#E8F0F9')}>{batches.find((b: Batch) => b.id === s.batch_id)?.name || '—'}</span>
                 </td>
-                <td style={{ padding: '12px', fontSize: 13, color: '#4A5568' }}>{(s.profiles as any)?.email || '—'}</td>
+                <td style={{ padding: '12px', fontSize: 13, color: '#4A5568' }}>
+                  {((s.profiles as any)?.email && !(s.profiles as any).email.endsWith('@tuition.local'))
+                    ? (s.profiles as any).email
+                    : '—'}
+                </td>
                 <td style={{ padding: '12px' }}>
                   <span style={s.is_active ? S.badge('#1C5D3B', '#E6F4ED') : S.badge('#8B1A1A', '#FEF2F2')}>
                     {s.is_active ? 'Active' : 'Inactive'}
@@ -530,11 +536,9 @@ function StudentsPage({ students, batches, reload }: any) {
               <button onClick={() => setShowAdd(false)} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: '#718096' }}>✕</button>
             </div>
             <div style={{ fontSize: 13, fontWeight: 600, color: '#1A3A5C', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Student Details</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+            <div className="form-grid" style={{ marginBottom: 12 }}>
               {[
                 { label: 'Full Name *', key: 'name', type: 'text' },
-                { label: 'Email *', key: 'email', type: 'email' },
-                { label: 'Password *', key: 'password', type: 'password' },
                 { label: 'Phone', key: 'phone', type: 'text' },
                 { label: 'Roll No', key: 'roll_no', type: 'text' },
                 { label: 'Date of Birth', key: 'date_of_birth', type: 'date' },
@@ -557,7 +561,7 @@ function StudentsPage({ students, batches, reload }: any) {
               <textarea style={{ ...S.inp, height: 72, resize: 'vertical' }} value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} />
             </div>
             <div style={{ fontSize: 13, fontWeight: 600, color: '#1A3A5C', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Parent / Guardian Details</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
+            <div className="form-grid" style={{ marginBottom: 20 }}>
               {[
                 { label: 'Parent Name', key: 'parent_name', type: 'text' },
                 { label: 'Parent Phone', key: 'parent_phone', type: 'text' },
@@ -603,7 +607,7 @@ function StudentsPage({ students, batches, reload }: any) {
               <div style={{ fontFamily: "'Fraunces',serif", fontSize: 20, fontWeight: 700, color: '#1A2332' }}>Edit Student</div>
               <button onClick={() => setEditing(null)} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: '#718096' }}>✕</button>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+            <div className="form-grid" style={{ marginBottom: 12 }}>
               <div>
                 <label style={S.label}>Full Name *</label>
                 <input style={S.inp} value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
@@ -1089,7 +1093,7 @@ function MarksPage({ students, batches, tests, marks, profile, reload }: any) {
               <div style={{ fontFamily: "'Fraunces',serif", fontSize: 20, fontWeight: 700 }}>Create Test</div>
               <button onClick={() => setShowCreateTest(false)} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer' }}>✕</button>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div className="form-grid">
               <div style={{ gridColumn: '1/-1' }}>
                 <label style={S.label}>Test Name *</label>
                 <input style={S.inp} placeholder="e.g. Unit Test 1" value={testForm.name} onChange={e => setTestForm({ ...testForm, name: e.target.value })} />
@@ -1315,7 +1319,7 @@ function MaterialsPage({ materials, batches, profile, reload }: any) {
                 <input style={S.inp} type={f.type} value={(form as any)[f.key]} onChange={e => setForm({ ...form, [f.key]: e.target.value })} />
               </div>
             ))}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
+            <div className="form-grid" style={{ marginBottom: 16 }}>
               <div>
                 <label style={S.label}>Subject *</label>
                 <select style={S.inp} value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })}>
@@ -1581,7 +1585,7 @@ function FeesPage({ fees, students, batches, profile, reload }: any) {
               <button onClick={() => setShowPayment(false)} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer' }}>✕</button>
             </div>
             <div style={{ fontSize: 14, color: '#718096', marginBottom: 20 }}>Student: <strong style={{ color: '#1A2332' }}>{(selectedStudent.profiles as any)?.name}</strong></div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div className="form-grid">
               {[
                 { label: 'Amount Paid *', key: 'amount_paid', type: 'number' },
                 { label: 'Total Fees *', key: 'total_fees', type: 'number' },

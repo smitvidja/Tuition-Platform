@@ -17,7 +17,7 @@ const S = {
   nav: { position: 'sticky' as const, top: 0, zIndex: 100, background: 'rgba(240,250,244,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(28,93,59,0.1)', padding: '0 24px' },
   navInner: { maxWidth: 1200, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 },
   logo: { fontFamily: "'Fraunces', serif", fontSize: 22, fontWeight: 700, color: '#1C5D3B' } as React.CSSProperties,
-  card: { background: '#fff', border: '1px solid rgba(28,93,59,0.1)', borderRadius: 12, padding: 24, boxShadow: '0 1px 4px rgba(0,0,0,0.04)' } as React.CSSProperties,
+  card: { background: '#fff', border: '1px solid rgba(28,93,59,0.1)', borderRadius: 12, padding: 24, boxShadow: '0 1px 4px rgba(0,0,0,0.04)', overflowX: 'auto' } as React.CSSProperties,
   btn: { background: '#1C5D3B', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: 8, fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 600, cursor: 'pointer' } as React.CSSProperties,
   btnGhost: { background: 'transparent', color: '#1C5D3B', border: '1.5px solid rgba(28,93,59,0.25)', padding: '9px 18px', borderRadius: 8, fontFamily: "'DM Sans',sans-serif", fontSize: 14, cursor: 'pointer' } as React.CSSProperties,
   btnDanger: { background: '#fff', color: '#dc2626', border: '1.5px solid #fecaca', padding: '7px 14px', borderRadius: 8, fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 600, cursor: 'pointer' } as React.CSSProperties,
@@ -125,6 +125,8 @@ export default function FacultyDashboard() {
         @media(max-width:900px) { .desktop-nav { display: none !important; } .ham-btn { display: flex !important; } }
         @media(max-width:768px) { .stats-grid { grid-template-columns: 1fr 1fr !important; } .two-col { grid-template-columns: 1fr !important; } .modal-inner { position: fixed; bottom: 0; left: 0; right: 0; max-width: 100% !important; border-radius: 16px 16px 0 0; max-height: 85vh; } }
         @media(max-width:480px) { .stats-grid { grid-template-columns: 1fr !important; } }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        @media(max-width:600px) { .form-grid { grid-template-columns: 1fr !important; } }
       `}</style>
 
       {/* NAVBAR */}
@@ -556,7 +558,7 @@ function MarksPage({ students, batches, tests, marks, profile, reload }: any) {
               <button onClick={() => setShowCreateTest(false)} style={{ width: 32, height: 32, borderRadius: 8, background: '#f1f5f9', border: 'none', cursor: 'pointer', fontSize: 16, color: '#64748b' }}>✕</button>
             </div>
             <div style={{ padding: 24 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+              <div className="form-grid">
                 <div style={{ gridColumn: '1/-1' }}>
                   <label style={S.label}>Test Name *</label>
                   <input style={S.inp} placeholder="e.g. Unit Test 1" value={testForm.name} onChange={e => setTestForm({ ...testForm, name: e.target.value })} />

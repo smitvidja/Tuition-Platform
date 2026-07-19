@@ -5,76 +5,73 @@ import { useRouter } from 'next/navigation'
 
 const TOPPERS = [
   {
-    name: 'Aarav Shah',
-    photo: 'D:\\2026\\web\\SR_Classes\\src\\app\\school-boy-with-books-illustration-ai-generative-free-photo.jpg',
-    score: '98.4%',
-    exam: 'CBSE Class 12',
+    name: 'Kashish Tekwani',
+    photo: '',
+    score: '84%',
+    exam: 'CBSE Class 12th',
     batch: '2025–26',
-    subject: 'Science Stream',
-    quote: 'SR Classes gave me the structure and confidence I needed to crack boards.',
+    subject: 'Accountancy 96 · English 93',
+    quote: '',
   },
   {
-    name: 'Diya Patel',
-    photo: '/toppers/diya.jpg',
-    score: '99/100',
-    exam: 'GSEB Class 10',
+    name: 'Suhana Ramtrii',
+    photo: '',
+    score: '86%',
+    exam: 'CBSE Class 12th',
     batch: '2025–26',
-    subject: 'All Subjects',
-    quote: 'The weekly tests kept me on track throughout the entire year.',
+    subject: 'English 93 · B.S 93',
+    quote: '',
   },
   {
-    name: 'Rohan Mehta',
-    photo: '/toppers/rohan.jpg',
-    score: 'AIR 412',
-    exam: 'IIT-JEE Advanced',
+    name: 'Johnny Tekwani',
+    photo: '',
+    score: '87%',
+    exam: 'GSEB Class 12th',
     batch: '2025–26',
-    subject: 'Physics · Chem · Maths',
-    quote: 'Best faculty I have ever studied under. Truly transformative experience.',
+    // subject: '',
+    quote: '',
   },
   {
-    name: 'Priya Desai',
-    photo: '/toppers/priya.jpg',
-    score: '680/720',
-    exam: 'NEET UG',
-    batch: '2025–26',
-    subject: 'Biology · Chemistry',
-    quote: 'Mock tests here are harder than the real exam — that is the secret.',
+    name: 'Saksham Tejwani',
+    photo: '',
+    score: '91%',
+    exam: 'GSEB Class 10th',
+    batch: '2024–25',
+    // subject: '',
+    quote: '',
   },
   {
-    name: 'Arjun Joshi',
-    photo: '/toppers/arjun.jpg',
-    score: '97.2%',
-    exam: 'ICSE Class 10',
+    name: 'Unnati Mulchandani',
+    photo: '',
+    score: '80%',
+    exam: 'GSEB Class 10th',
     batch: '2025–26',
-    subject: 'Mathematics',
-    quote: 'Sir explained every concept so clearly. I never had to memorise blindly.',
+    // subject: '',
+    quote: '',
   },
 ]
 
 const BRAND = {
-  phone: '+91 98765 43210',
-  email: 'info@srclasses.com',
-  address: 'Ahmedabad, Gujarat',
+  phone: '+91 8200718732  /  +91 9016385211',
+  email: 'piyush.ganwani@gmail.com',
+  address: 'Sardarnagar, Ahmedabad',
   ticker: [
-    'Admissions Open for 2026–27',
-    '95% Students Scored Above 90% in Board Exams',
-    'New Batch Starting May 2026',
-    'Special Coaching for IIT-JEE & NEET',
-    'Free Demo Class Available — Enroll Today',
+    'Free Demo Class Available',
+    'Admissions Open for 2026–2027',
+    '100% Result',
+    'Special Coaching for All Boards',
   ],
   stats: [
     { value: 500, suffix: '+', label: 'Students Enrolled' },
-    { value: 12, suffix: '+', label: 'Years Experience' },
-    { value: 95, suffix: '%', label: 'Success Rate' },
-    { value: 20, suffix: '+', label: 'Expert Faculty' },
+    { value: 8, suffix: '+', label: 'Years Experience' },
+    { value: 100, suffix: '%', label: 'Success Rate' },
   ],
   boards: [
     { name: 'CBSE', sub: 'Class 6–12' },
+    { name: 'GSEB', sub: 'Class 6–12' },
     { name: 'ICSE', sub: 'Class 6–12' },
-    { name: 'GSEB', sub: 'Gujarat Board' },
-    { name: 'IIT-JEE', sub: 'Mains & Advanced' },
-    { name: 'NEET', sub: 'Medical Entrance' },
-    { name: 'SAT', sub: 'International' },
+    { name: 'B.Com', sub: 'Commerce' },
+    { name: 'BBA', sub: 'Management' },
   ],
   whyUs: [
     { icon: '🎯', num: '01', title: 'Result Oriented Teaching', desc: 'Focused curriculum engineered for maximum marks and deep conceptual clarity in every subject.' },
@@ -82,13 +79,9 @@ const BRAND = {
     { icon: '📊', num: '03', title: 'Regular Assessments', desc: 'Weekly and monthly tests to track progress, identify gaps, and keep students exam-ready.' },
     { icon: '👨‍👩‍👧', num: '04', title: 'Parent Partnership', desc: 'Transparent communication with parents through regular updates and a dedicated parent portal.' },
     { icon: '📱', num: '05', title: 'Digital Access', desc: 'Study materials and attendance records accessible 24/7 via our secure online platform.' },
-    { icon: '🏆', num: '06', title: 'Proven Track Record', desc: '500+ students placed in top colleges and universities across India over 12+ years.' },
+    { icon: '🏆', num: '06', title: 'Proven Track Record', desc: '500+ students placed in top colleges and universities across India over 8+ years.' },
   ],
-  testimonials: [
-    { name: 'Priya Sharma', initials: 'PS', batch: 'Class 12 Science · Parent', text: "SR Classes transformed my daughter's performance. She scored 94% in boards — something we didn't think was possible a year ago.", avatarBg: '#1E6FBF' },
-    { name: 'Rahul Patel', initials: 'RP', batch: 'IIT-JEE Batch · Parent', text: 'Best faculty in Ahmedabad. My son cleared JEE with their guidance. The structured approach and mock tests made all the difference.', avatarBg: '#0F4C7A' },
-    { name: 'Meena Shah', initials: 'MS', batch: 'Class 10 CBSE · Parent', text: 'Very disciplined environment and excellent study material. My daughter feels confident and motivated — something she lacked before joining.', avatarBg: '#145A8A' },
-  ],
+  testimonials: [],
 }
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {
@@ -312,7 +305,6 @@ export default function LandingPage() {
     { id: 'home', label: 'Home' },
     { id: 'boards', label: 'Boards' },
     { id: 'why', label: 'Why Us' },
-    { id: 'testimonials', label: 'Testimonials' },
     { id: 'cta', label: 'Contact' },
   ]
 
@@ -326,89 +318,98 @@ export default function LandingPage() {
         html { scroll-behavior: smooth; }
 
         @keyframes marquee   { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        @keyframes livepulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(1.6); } }
-        @keyframes fadeUp    { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes modalIn   { from { opacity:0; transform:scale(.96) translateY(8px); } to { opacity:1; transform:scale(1) translateY(0); } }
-        @keyframes tcSlide   { from { opacity:0; transform:translateX(22px); } to { opacity:1; transform:translateX(0); } }
+        @keyframes livepulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.4; transform:scale(1.7); } }
+        @keyframes fadeUp    { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes modalIn   { from { opacity:0; transform:scale(.94) translateY(12px); } to { opacity:1; transform:scale(1) translateY(0); } }
+        @keyframes tcSlide   { from { opacity:0; transform:translateX(28px); } to { opacity:1; transform:translateX(0); } }
         @keyframes tcBar     { from { width:0%; } to { width:100%; } }
+        @keyframes shimmer   { from { background-position:-400px 0; } to { background-position:400px 0; } }
 
-        .f1 { animation: fadeUp .6s .10s ease both; }
-        .f2 { animation: fadeUp .6s .22s ease both; }
-        .f3 { animation: fadeUp .6s .34s ease both; }
-        .f4 { animation: fadeUp .6s .46s ease both; }
-        .f5 { animation: fadeUp .6s .58s ease both; }
+        .f1 { animation: fadeUp .7s .08s cubic-bezier(.22,1,.36,1) both; }
+        .f2 { animation: fadeUp .7s .20s cubic-bezier(.22,1,.36,1) both; }
+        .f3 { animation: fadeUp .7s .32s cubic-bezier(.22,1,.36,1) both; }
+        .f4 { animation: fadeUp .7s .44s cubic-bezier(.22,1,.36,1) both; }
+        .f5 { animation: fadeUp .7s .56s cubic-bezier(.22,1,.36,1) both; }
 
         /* ticker */
-        .ticker-track { display:flex; width:max-content; animation:marquee 35s linear infinite; }
+        .ticker-track { display:flex; width:max-content; animation:marquee 32s linear infinite; }
         .ticker-track:hover { animation-play-state:paused; }
 
-        /* nav active indicator */
+        /* nav */
+        .nav-link { position:relative; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; padding:8px 14px; border-radius:8px; transition:color .2s, background .2s; }
+        .nav-link:hover { background:rgba(11,37,69,0.05); color:#0B2545 !important; }
         .nav-active { color:#0B2545 !important; }
-        .nav-active::after { content:''; position:absolute; bottom:4px; left:50%; transform:translateX(-50%); width:16px; height:2px; background:#4AA8FF; border-radius:2px; }
+        .nav-active::after { content:''; position:absolute; bottom:2px; left:50%; transform:translateX(-50%); width:18px; height:2.5px; background:#4AA8FF; border-radius:2px; }
 
-        /* stat hover */
-        .stat-cell { transition:background .25s; cursor:default; position:relative; overflow:hidden; }
-        .stat-cell::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%) scaleX(0); width:36px; height:2px; background:#4AA8FF; border-radius:2px; transition:transform .3s; }
-        .stat-cell:hover { background:#EEF5FF; }
+        /* stat cells */
+        .stat-cell { transition:background .25s, transform .25s; cursor:default; position:relative; overflow:hidden; }
+        .stat-cell::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(74,168,255,0.06) 0%,transparent 60%); opacity:0; transition:opacity .3s; }
+        .stat-cell:hover { background:#EEF5FF; transform:translateY(-2px); }
+        .stat-cell:hover::before { opacity:1; }
+        .stat-cell::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%) scaleX(0); width:40px; height:2.5px; background:#4AA8FF; border-radius:2px; transition:transform .35s cubic-bezier(.22,1,.36,1); }
         .stat-cell:hover::after { transform:translateX(-50%) scaleX(1); }
 
-        /* cards */
-        .board-card { transition:transform .25s, box-shadow .25s, border-color .25s; cursor:default; }
-        .board-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(11,37,69,.10); border-color:rgba(74,168,255,.35) !important; }
-        .why-card { transition:transform .3s, box-shadow .3s, border-color .3s; cursor:default; }
-        .why-card:hover { transform:translateY(-5px); box-shadow:0 16px 40px rgba(11,37,69,.08); border-color:rgba(74,168,255,.25) !important; }
-        .why-card:hover .why-icon { transform:scale(1.1); }
-        .why-icon { transition:transform .3s; }
-        .testi-card { transition:transform .3s, background .3s; cursor:default; }
-        .testi-card:hover { transform:translateY(-4px); background:rgba(255,255,255,.09) !important; }
+        /* board cards */
+        .board-card { transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s, border-color .28s; cursor:default; }
+        .board-card:hover { transform:translateY(-6px); box-shadow:0 16px 40px rgba(11,37,69,.12); border-color:rgba(74,168,255,.4) !important; }
+        .board-card:hover .board-icon { transform:scale(1.15); color:#4AA8FF !important; }
+        .board-icon { transition:transform .3s, color .3s; }
+
+        /* why cards */
+        .why-card { transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s, border-color .3s; cursor:default; }
+        .why-card:hover { transform:translateY(-7px); box-shadow:0 20px 48px rgba(11,37,69,.10); border-color:rgba(74,168,255,.3) !important; }
+        .why-card:hover .why-icon { transform:scale(1.15) rotate(-4deg); background:#0B2545 !important; }
+        .why-card:hover .why-icon span { filter:brightness(2); }
+        .why-icon { transition:transform .35s cubic-bezier(.22,1,.36,1), background .3s; }
 
         /* topper carousel */
         .tc-card { animation: tcSlide .45s cubic-bezier(.22,1,.36,1) both; }
         .tc-bar  { animation: tcBar 4s linear forwards; }
-        .tc-dot  { border:none; cursor:pointer; border-radius:9999px; padding:0; transition:width .25s, background .25s; }
-
-        /* class row */
-        .class-row { transition:background .2s; }
-        .class-row:hover { background:rgba(255,255,255,.05); }
+        .tc-dot  { border:none; cursor:pointer; border-radius:9999px; padding:0; transition:width .3s cubic-bezier(.22,1,.36,1), background .3s; }
 
         /* buttons */
         .btn-solid  { transition:background .2s, transform .2s, box-shadow .2s; }
-        .btn-solid:hover  { background:#6BB8FF !important; transform:translateY(-2px); box-shadow:0 8px 24px rgba(74,168,255,.3); }
-        .btn-ghost  { transition:background .2s; }
-        .btn-ghost:hover  { background:rgba(255,255,255,.15) !important; }
+        .btn-solid:hover  { background:#5BB8FF !important; transform:translateY(-3px); box-shadow:0 12px 28px rgba(74,168,255,.4); }
+        .btn-ghost  { transition:background .2s, border-color .2s, transform .2s; }
+        .btn-ghost:hover  { background:rgba(255,255,255,.14) !important; border-color:rgba(255,255,255,.5) !important; transform:translateY(-2px); }
         .btn-navy   { transition:background .2s, transform .2s, box-shadow .2s; }
-        .btn-navy:hover   { background:#06172E !important; transform:translateY(-2px); box-shadow:0 8px 24px rgba(11,37,69,.25); }
-        .btn-outline-light { transition:background .2s, color .2s; }
-        .btn-outline-light:hover { background:#0B2545 !important; color:#fff !important; border-color:#0B2545 !important; }
-        .login-nav  { transition:background .2s, transform .2s; }
-        .login-nav:hover  { background:#06172E !important; transform:translateY(-1px); }
-        .submit-btn { transition:background .2s; }
-        .submit-btn:hover:not(:disabled) { background:#06172E !important; }
+        .btn-navy:hover   { background:#061729 !important; transform:translateY(-3px); box-shadow:0 12px 28px rgba(11,37,69,.3); }
+        .btn-outline-light { transition:background .2s, color .2s, border-color .2s, transform .2s; }
+        .btn-outline-light:hover { background:#0B2545 !important; color:#fff !important; border-color:#0B2545 !important; transform:translateY(-2px); }
+        .login-nav  { transition:background .2s, transform .2s, box-shadow .2s; }
+        .login-nav:hover  { background:#061729 !important; transform:translateY(-1px); box-shadow:0 4px 12px rgba(11,37,69,.25); }
+        .submit-btn { transition:background .2s, transform .15s; }
+        .submit-btn:hover:not(:disabled) { background:#061729 !important; transform:translateY(-1px); }
 
         /* role tile */
-        .role-tile { transition:border-color .2s, background .2s; cursor:pointer; }
-        .role-tile:hover { border-color:#1A3A5C !important; background:#EEF5FF !important; }
-        .role-tile.sel { border-color:#0B2545 !important; background:#EEF5FF !important; }
+        .role-tile { transition:border-color .2s, background .2s, transform .2s, box-shadow .2s; cursor:pointer; }
+        .role-tile:hover { border-color:#1A3A5C !important; background:#EEF5FF !important; transform:translateY(-2px); box-shadow:0 4px 16px rgba(11,37,69,.08); }
+        .role-tile.sel { border-color:#0B2545 !important; background:#EEF5FF !important; box-shadow:0 4px 16px rgba(11,37,69,.10); }
 
         /* field */
-        .field-inp:focus { border-color:#0B2545 !important; outline:none; }
+        .field-inp { transition:border-color .2s, box-shadow .2s; }
+        .field-inp:focus { border-color:#0B2545 !important; outline:none; box-shadow:0 0 0 3px rgba(11,37,69,.06); }
+
+        /* contact item */
+        .contact-item { transition:transform .25s, color .25s; }
+        .contact-item:hover { transform:translateY(-2px); color:rgba(255,255,255,0.9) !important; }
 
         /* mobile drawer animation */
         @keyframes slideIn { from { transform:translateX(100%); } to { transform:translateX(0); } }
-        .mob-drawer { animation:slideIn .25s ease; }
+        .mob-drawer { animation:slideIn .28s cubic-bezier(.22,1,.36,1); }
 
         /* responsive grid helpers */
-        .hero-grid    { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+        .hero-grid    { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
         .stats-grid   { display:grid; grid-template-columns:repeat(4,1fr); }
-        .boards-grid  { display:grid; grid-template-columns:repeat(6,1fr); gap:14px; }
-        .why-grid     { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+        .boards-grid  { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; }
+        .why-grid     { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
         .testi-grid   { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-        .contact-flex { display:flex; justify-content:center; gap:48px; flex-wrap:wrap; }
+        .contact-flex { display:flex; justify-content:center; gap:56px; flex-wrap:wrap; }
         .cta-btns     { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
         .hero-cta     { display:flex; gap:14px; flex-wrap:wrap; }
 
         @media (max-width:960px) {
-          .hero-grid   { grid-template-columns:1fr !important; }
+          .hero-grid   { grid-template-columns:1fr !important; gap:40px !important; }
           .stats-grid  { grid-template-columns:repeat(2,1fr) !important; }
           .boards-grid { grid-template-columns:repeat(3,1fr) !important; }
           .why-grid    { grid-template-columns:repeat(2,1fr) !important; }
@@ -436,25 +437,25 @@ export default function LandingPage() {
       {/* ─── NAVBAR ─── */}
       <nav style={{
         position: 'sticky', top: 0, zIndex: 200,
-        background: scrolled ? 'rgba(255,255,255,0.95)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(16px)' : 'none',
-        boxShadow: scrolled ? '0 1px 0 rgba(11,37,69,0.08)' : 'none',
+        background: scrolled ? 'rgba(255,255,255,0.96)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        boxShadow: scrolled ? '0 1px 0 rgba(11,37,69,0.07), 0 4px 24px rgba(11,37,69,0.04)' : 'none',
         transition: 'background .3s, box-shadow .3s',
       }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 28px', height: 68, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Logo />
           {/* Desktop links */}
           <div className="desk-nav" style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             {navLinks.map(l => (
               <button key={l.id} onClick={() => scrollTo(l.id)}
-                className={activeSection === l.id ? 'nav-active' : ''}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 500, color: activeSection === l.id ? '#0B2545' : '#4A6080', padding: '8px 14px', borderRadius: 8, position: 'relative', transition: 'color .2s' }}>
+                className={`nav-link${activeSection === l.id ? ' nav-active' : ''}`}
+                style={{ color: activeSection === l.id ? '#0B2545' : '#4A6080' }}>
                 {l.label}
               </button>
             ))}
             <button className="login-nav"
               onClick={() => setLoginOpen(true)}
-              style={{ background: '#0B2545', color: '#fff', border: 'none', padding: '9px 22px', borderRadius: 8, fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 600, cursor: 'pointer', marginLeft: 8 }}>
+              style={{ background: '#0B2545', color: '#fff', border: 'none', padding: '10px 24px', borderRadius: 9, fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 600, cursor: 'pointer', marginLeft: 12 }}>
               Login
             </button>
           </div>
@@ -501,7 +502,7 @@ export default function LandingPage() {
               </h1>
 
               <p className="f3" style={{ fontSize: 17, color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, marginBottom: 36, fontWeight: 300 }}>
-                Expert coaching for Classes 6–12, IIT-JEE &amp; NEET. Personalised attention, proven results, and a nurturing environment for every student.
+                Expert Coaching for Class 6–12, B.Com &amp; BBA. Personalised attention, proven results, and a nurturing environment for every student.
               </p>
 
               <div className="f4 hero-cta">
@@ -589,32 +590,32 @@ export default function LandingPage() {
       </section>
 
       {/* ─── STATS STRIP ─── */}
-      <div style={{ background: '#fff', borderBottom: '1px solid rgba(11,37,69,0.06)' }}>
-        <div className="stats-grid" style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <div style={{ background: '#fff', borderBottom: '1px solid rgba(11,37,69,0.06)', boxShadow: '0 4px 24px rgba(11,37,69,0.04)' }}>
+        <div className="stats-grid" style={{ maxWidth: 1200, margin: '0 auto', gridTemplateColumns: 'repeat(3,1fr)' }}>
           {BRAND.stats.map((s, i) => (
-            <div key={i} className="stat-cell" style={{ padding: '32px 20px', textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(11,37,69,0.06)' : 'none' }}>
-              <div style={{ fontFamily: "'Fraunces', serif", fontSize: 36, fontWeight: 700, color: '#0B2545', lineHeight: 1 }}>
+            <div key={i} className="stat-cell" style={{ padding: '40px 20px', textAlign: 'center', borderRight: i < 2 ? '1px solid rgba(11,37,69,0.06)' : 'none' }}>
+              <div style={{ fontFamily: "'Fraunces', serif", fontSize: 44, fontWeight: 700, color: '#0B2545', lineHeight: 1, letterSpacing: '-1px' }}>
                 <Counter value={s.value} suffix={s.suffix} />
               </div>
-              <div style={{ fontSize: 13, color: '#8BA3BE', marginTop: 6 }}>{s.label}</div>
+              <div style={{ fontSize: 13, color: '#8BA3BE', marginTop: 8, fontWeight: 500, letterSpacing: '0.04em' }}>{s.label}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* ─── BOARDS ─── */}
-      <section id="boards" style={{ padding: '80px 24px', background: '#EEF5FF' }}>
+      <section id="boards" style={{ padding: '88px 24px', background: 'linear-gradient(180deg, #EEF5FF 0%, #f8fbff 100%)' }}>
         <div className="sec-inner" style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 52 }}>
-            <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4AA8FF', marginBottom: 12 }}>Curriculum</div>
+          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <div style={{ display: 'inline-block', fontSize: 12, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#4AA8FF', marginBottom: 14, background: 'rgba(74,168,255,0.10)', padding: '5px 16px', borderRadius: 100 }}>Curriculum</div>
             <h2 className="sec-title" style={{ fontFamily: "'Fraunces', serif", fontSize: 38, fontWeight: 700, color: '#0B1829', marginBottom: 14 }}>Boards &amp; Exams We Cover</h2>
-            <p style={{ fontSize: 16, color: '#4A6080', maxWidth: 520, margin: '0 auto' }}>Comprehensive coaching for every major board and competitive examination</p>
+            <p style={{ fontSize: 16, color: '#4A6080', maxWidth: 500, margin: '0 auto', lineHeight: 1.7 }}>Comprehensive coaching for every major board and competitive examination</p>
           </div>
           <div className="boards-grid">
             {BRAND.boards.map((b, i) => (
-              <div key={i} className="board-card" style={{ background: '#fff', border: '1px solid rgba(11,37,69,0.08)', borderRadius: 12, padding: '24px 16px', textAlign: 'center' }}>
-                <div style={{ fontFamily: "'Fraunces', serif", fontSize: 22, fontWeight: 700, color: '#0B2545', marginBottom: 4 }}>{b.name}</div>
-                <div style={{ fontSize: 11, color: '#8BA3BE' }}>{b.sub}</div>
+              <div key={i} className="board-card" style={{ background: '#fff', border: '1.5px solid rgba(11,37,69,0.07)', borderRadius: 16, padding: '28px 16px', textAlign: 'center', boxShadow: '0 2px 12px rgba(11,37,69,0.04)' }}>
+                <div className="board-icon" style={{ fontFamily: "'Fraunces', serif", fontSize: 24, fontWeight: 700, color: '#0B2545', marginBottom: 6 }}>{b.name}</div>
+                <div style={{ fontSize: 11, color: '#8BA3BE', fontWeight: 500, letterSpacing: '0.04em' }}>{b.sub}</div>
               </div>
             ))}
           </div>
@@ -622,46 +623,24 @@ export default function LandingPage() {
       </section>
 
       {/* ─── WHY US ─── */}
-      <section id="why" style={{ padding: '80px 24px', background: '#fff' }}>
+      <section id="why" style={{ padding: '88px 24px', background: '#fff' }}>
         <div className="sec-inner" style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ marginBottom: 52 }}>
-            <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4AA8FF', marginBottom: 12 }}>Our Approach</div>
-            <h2 className="sec-title" style={{ fontFamily: "'Fraunces', serif", fontSize: 38, fontWeight: 700, color: '#0B1829', marginBottom: 14 }}>Why SR Classes?</h2>
-            <p style={{ fontSize: 16, color: '#4A6080', maxWidth: 520 }}>Everything your child needs to succeed, under one roof — designed around results.</p>
+          <div style={{ marginBottom: 56, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16 }}>
+            <div>
+              <div style={{ display: 'inline-block', fontSize: 12, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#4AA8FF', marginBottom: 14, background: 'rgba(74,168,255,0.10)', padding: '5px 16px', borderRadius: 100 }}>Our Approach</div>
+              <h2 className="sec-title" style={{ fontFamily: "'Fraunces', serif", fontSize: 38, fontWeight: 700, color: '#0B1829', marginBottom: 10 }}>Why SR Classes?</h2>
+              <p style={{ fontSize: 16, color: '#4A6080', maxWidth: 480, lineHeight: 1.7 }}>Everything your child needs to succeed, under one roof — designed around results.</p>
+            </div>
           </div>
           <div className="why-grid">
             {BRAND.whyUs.map((w, i) => (
-              <div key={i} className="why-card" style={{ background: '#fff', border: '1px solid rgba(11,37,69,0.07)', borderRadius: 14, padding: 28, position: 'relative', overflow: 'hidden' }}>
-                <div style={{ fontFamily: "'Fraunces', serif", fontSize: 40, fontWeight: 700, color: 'rgba(11,37,69,0.04)', position: 'absolute', top: 16, right: 18, lineHeight: 1, userSelect: 'none' }}>{w.num}</div>
-                <div className="why-icon" style={{ width: 44, height: 44, background: '#EEF5FF', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, marginBottom: 18 }}>{w.icon}</div>
-                <div style={{ fontSize: 16, fontWeight: 600, color: '#0B1829', marginBottom: 8 }}>{w.title}</div>
-                <div style={{ fontSize: 14, color: '#4A6080', lineHeight: 1.65 }}>{w.desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── TESTIMONIALS ─── */}
-      <section id="testimonials" style={{ padding: '80px 24px', background: '#0B2545' }}>
-        <div className="sec-inner" style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 52 }}>
-            <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(74,168,255,0.9)', marginBottom: 12 }}>Testimonials</div>
-            <h2 className="sec-title" style={{ fontFamily: "'Fraunces', serif", fontSize: 38, fontWeight: 700, color: '#fff', marginBottom: 14 }}>What Parents Say</h2>
-            <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.5)', maxWidth: 480, margin: '0 auto' }}>Real results from real families across Ahmedabad</p>
-          </div>
-          <div className="testi-grid">
-            {BRAND.testimonials.map((t, i) => (
-              <div key={i} className="testi-card" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: 28 }}>
-                <div style={{ color: '#F4A623', fontSize: 14, marginBottom: 16, letterSpacing: 2 }}>★★★★★</div>
-                <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: 20, fontStyle: 'italic' }}>&ldquo;{t.text}&rdquo;</p>
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 16, display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div style={{ width: 38, height: 38, borderRadius: '50%', background: t.avatarBg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 600, color: '#fff', flexShrink: 0 }}>{t.initials}</div>
-                  <div>
-                    <div style={{ fontSize: 14, fontWeight: 600, color: '#fff' }}>{t.name}</div>
-                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{t.batch}</div>
-                  </div>
+              <div key={i} className="why-card" style={{ background: '#fff', border: '1.5px solid rgba(11,37,69,0.07)', borderRadius: 18, padding: 32, position: 'relative', overflow: 'hidden', boxShadow: '0 2px 16px rgba(11,37,69,0.04)' }}>
+                <div style={{ fontFamily: "'Fraunces', serif", fontSize: 72, fontWeight: 700, color: 'rgba(11,37,69,0.03)', position: 'absolute', top: 8, right: 16, lineHeight: 1, userSelect: 'none', letterSpacing: '-2px' }}>{w.num}</div>
+                <div className="why-icon" style={{ width: 52, height: 52, background: '#EEF5FF', borderRadius: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
+                  <span style={{ fontSize: 24 }}>{w.icon}</span>
                 </div>
+                <div style={{ fontSize: 16, fontWeight: 700, color: '#0B1829', marginBottom: 10 }}>{w.title}</div>
+                <div style={{ fontSize: 14, color: '#4A6080', lineHeight: 1.7 }}>{w.desc}</div>
               </div>
             ))}
           </div>
@@ -669,25 +648,25 @@ export default function LandingPage() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section id="cta" style={{ padding: '90px 24px', background: '#EEF5FF', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', width: 400, height: 400, background: 'rgba(74,168,255,0.1)', borderRadius: '50%', filter: 'blur(60px)', top: -60, right: -80, pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', width: 300, height: 300, background: 'rgba(11,37,69,0.04)', borderRadius: '50%', filter: 'blur(50px)', bottom: -40, left: -60, pointerEvents: 'none' }} />
-        <div className="sec-inner" style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
-          <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4AA8FF', marginBottom: 12 }}>Get Started</div>
-          <h2 className="cta-title" style={{ fontFamily: "'Fraunces', serif", fontSize: 42, fontWeight: 700, color: '#0B1829', marginBottom: 16 }}>Ready to Begin?</h2>
-          <p style={{ fontSize: 17, color: '#4A6080', lineHeight: 1.7, marginBottom: 40 }}>
-            Join 500+ students already achieving their academic goals. Book a free demo class today — no commitment needed.
+      <section id="cta" style={{ padding: '100px 24px', background: 'linear-gradient(160deg,#0B2545 0%,#1A3A5C 60%,#0F2A3D 100%)', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', width: 500, height: 500, background: 'rgba(74,168,255,0.08)', borderRadius: '50%', filter: 'blur(80px)', top: -120, right: -100, pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', width: 350, height: 350, background: 'rgba(30,111,191,0.1)', borderRadius: '50%', filter: 'blur(60px)', bottom: -60, left: -80, pointerEvents: 'none' }} />
+        <div className="sec-inner" style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+          <div style={{ display: 'inline-block', fontSize: 12, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#4AA8FF', marginBottom: 16, background: 'rgba(74,168,255,0.12)', border: '1px solid rgba(74,168,255,0.25)', padding: '5px 18px', borderRadius: 100 }}>Get Started</div>
+          <h2 className="cta-title" style={{ fontFamily: "'Fraunces', serif", fontSize: 46, fontWeight: 700, color: '#fff', marginBottom: 18, lineHeight: 1.12, letterSpacing: '-0.5px' }}>Ready to Begin?</h2>
+          <p style={{ fontSize: 17, color: 'rgba(255,255,255,0.6)', lineHeight: 1.75, marginBottom: 44, fontWeight: 300 }}>
+            Join 500+ students already achieving their academic goals.<br/>Book a free demo class today — no commitment needed.
           </p>
           <div className="cta-btns">
-            <button className="btn-navy"
+            <button className="btn-solid"
               onClick={() => setLoginOpen(true)}
-              style={{ background: '#0B2545', color: '#fff', border: 'none', padding: '15px 32px', borderRadius: 10, fontFamily: "'DM Sans',sans-serif", fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
+              style={{ background: '#4AA8FF', color: '#0B2545', border: 'none', padding: '15px 36px', borderRadius: 10, fontFamily: "'DM Sans',sans-serif", fontSize: 15, fontWeight: 700, cursor: 'pointer' }}>
               Login to Portal
             </button>
-            <a href={`tel:${BRAND.phone}`} style={{ textDecoration: 'none' }}>
-              <button className="btn-outline-light"
-                style={{ background: 'transparent', color: '#0B2545', border: '1.5px solid rgba(11,37,69,0.2)', padding: '14px 32px', borderRadius: 10, fontFamily: "'DM Sans',sans-serif", fontSize: 15, fontWeight: 500, cursor: 'pointer', width: '100%' }}>
-                📞 {BRAND.phone}
+            <a href="tel:+918208732" style={{ textDecoration: 'none' }}>
+              <button className="btn-ghost"
+                style={{ background: 'rgba(255,255,255,0.08)', color: '#fff', border: '1.5px solid rgba(255,255,255,0.22)', padding: '14px 32px', borderRadius: 10, fontFamily: "'DM Sans',sans-serif", fontSize: 15, fontWeight: 500, cursor: 'pointer', width: '100%' }}>
+                📞 +91 8200718732  /  +91 9016385211
               </button>
             </a>
           </div>
@@ -695,27 +674,27 @@ export default function LandingPage() {
       </section>
 
       {/* ─── CONTACT BAR ─── */}
-      <div style={{ background: '#0B2545', padding: '32px 24px' }}>
+      <div style={{ background: '#061729', padding: '40px 24px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
         <div className="contact-flex" style={{ maxWidth: 1200, margin: '0 auto' }}>
           {[
             { icon: '📍', text: BRAND.address },
             { icon: '📞', text: BRAND.phone },
             { icon: '✉️', text: BRAND.email },
           ].map((c, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'rgba(255,255,255,0.6)', fontSize: 14 }}>
-              <div style={{ width: 34, height: 34, background: 'rgba(74,168,255,0.12)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, flexShrink: 0 }}>{c.icon}</div>
-              <span>{c.text}</span>
+            <div key={i} className="contact-item" style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'rgba(255,255,255,0.55)', fontSize: 14 }}>
+              <div style={{ width: 40, height: 40, background: 'rgba(74,168,255,0.10)', border: '1px solid rgba(74,168,255,0.15)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17, flexShrink: 0 }}>{c.icon}</div>
+              <span style={{ fontWeight: 400 }}>{c.text}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* ─── FOOTER ─── */}
-      <footer style={{ background: '#060E1A', padding: '28px 24px', textAlign: 'center' }}>
+      <footer style={{ background: '#040B14', padding: '28px 24px', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>
           <Logo dark />
         </div>
-        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.28)', marginTop: 8 }}>
+        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.22)', marginTop: 10, letterSpacing: '0.04em' }}>
           © {new Date().getFullYear()} SR Classes, Ahmedabad. All rights reserved.
         </div>
       </footer>

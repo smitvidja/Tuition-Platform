@@ -19,7 +19,7 @@ const S = {
   nav: { position: 'sticky' as const, top: 0, zIndex: 100, background: 'rgba(250,250,248,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(26,58,92,0.08)', padding: '0 24px' },
   navInner: { maxWidth: 1200, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 },
   logo: { fontFamily: "'Fraunces', serif", fontSize: 22, fontWeight: 700, color: '#1A3A5C' } as React.CSSProperties,
-  card: { background: '#fff', border: '1px solid rgba(26,58,92,0.08)', borderRadius: 4, padding: 24 } as React.CSSProperties,
+  card: { background: '#fff', border: '1px solid rgba(26,58,92,0.08)', borderRadius: 4, padding: 24, overflowX: 'auto' } as React.CSSProperties,
   btn: { background: '#1A3A5C', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: 3, fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 500, cursor: 'pointer' } as React.CSSProperties,
   btnGhost: { background: 'transparent', color: '#1A3A5C', border: '1.5px solid rgba(26,58,92,0.2)', padding: '9px 18px', borderRadius: 3, fontFamily: "'DM Sans',sans-serif", fontSize: 14, cursor: 'pointer' } as React.CSSProperties,
   badge: (color: string, bg: string) => ({ display: 'inline-block', padding: '3px 10px', borderRadius: 3, fontSize: 12, fontWeight: 500, color, background: bg } as React.CSSProperties),
