@@ -79,7 +79,7 @@ const BRAND = {
     { icon: '📊', num: '03', title: 'Regular Assessments', desc: 'Weekly and monthly tests to track progress, identify gaps, and keep students exam-ready.' },
     { icon: '👨‍👩‍👧', num: '04', title: 'Parent Partnership', desc: 'Transparent communication with parents through regular updates and a dedicated parent portal.' },
     { icon: '📱', num: '05', title: 'Digital Access', desc: 'Study materials and attendance records accessible 24/7 via our secure online platform.' },
-    { icon: '🏆', num: '06', title: 'Proven Track Record', desc: '500+ students placed in top colleges and universities across India over 8+ years.' },
+    { icon: '🏆', num: '06', title: 'Proven Track Record', desc: 'Over 8 years, more than 500 students secured excellent academic results.' },
   ],
   testimonials: [],
 }
