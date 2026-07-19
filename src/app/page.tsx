@@ -492,9 +492,9 @@ export default function LandingPage() {
             {/* LEFT */}
             <div>
               <div className="f1" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(74,168,255,0.15)', border: '1px solid rgba(74,168,255,0.3)', color: '#4AA8FF', padding: '6px 16px', borderRadius: 100, fontSize: 13, fontWeight: 500, marginBottom: 24 }}>
-                <span style={{ width: 7, height: 7, background: '#4ADE80', borderRadius: '50%', display: 'inline-block', animation: 'livepulse 1.5s infinite', flexShrink: 0 }} />
-                Ahmedabad&apos;s #1 Tuition Centre
-              </div>
+              <span style={{ width: 7, height: 7, background: '#4ADE80', borderRadius: '50%', display: 'inline-block', animation: 'livepulse 1.5s infinite', flexShrink: 0 }} />
+              Your search for best coaching in Ahmedabad ends here.
+            </div>
 
               <h1 className="f2 hero-h1" style={{ fontFamily: "'Fraunces', serif", fontSize: 50, fontWeight: 700, color: '#fff', lineHeight: 1.12, marginBottom: 20, letterSpacing: '-1px' }}>
                 Unlock Your Child&apos;s True{' '}
