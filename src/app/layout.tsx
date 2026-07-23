@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
   title: 'SR Classes | Coaching for Classes 6–12 in Ahmedabad',
@@ -30,6 +31,7 @@ export default function RootLayout({
         WebkitFontSmoothing: 'antialiased',
       }}>
         {children}
+        <Analytics />
       </body>
     </html>
   )
