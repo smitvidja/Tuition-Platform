@@ -9,11 +9,23 @@ export async function POST(req: NextRequest) {
       parent_name, parent_email, parent_phone, parent_password
     } = await req.json()
 
+    // Fallbacks for student email and password since they are optional in the UI
+    let finalStudentEmail = email
+    if (!finalStudentEmail) {
+      const uniqueId = Math.random().toString(36).substring(2, 10)
+      finalStudentEmail = `student_${uniqueId}_${Date.now()}@tuition.local`
+    }
+
+    let finalStudentPassword = password
+    if (!finalStudentPassword) {
+      finalStudentPassword = Math.random().toString(36).substring(2, 12) + 'S1!'
+    }
+
     // ── 1. Create student auth user ──────────────────────
     const { data: studentAuth, error: studentAuthError } =
       await supabaseAdmin.auth.admin.createUser({
-        email,
-        password,
+        email: finalStudentEmail,
+        password: finalStudentPassword,
         email_confirm: true,
         user_metadata: { name, role: 'parent' }
         // role: parent because students don't log in directly

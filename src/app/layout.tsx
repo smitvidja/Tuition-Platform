@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
-  title: 'SR Classes',
-  description: 'SR Classes — Tuition Centre Management System, Ahmedabad',
+  title: 'SR Classes | Coaching for Classes 6–12 in Ahmedabad',
+  description: 'Expert coaching for Classes 6–12 in Ahmedabad. Personalised attention, proven results, and a nurturing environment for every student. Enroll now.',
 }
 
 export default function RootLayout({
@@ -30,6 +31,7 @@ export default function RootLayout({
         WebkitFontSmoothing: 'antialiased',
       }}>
         {children}
+        <Analytics />
       </body>
     </html>
   )
